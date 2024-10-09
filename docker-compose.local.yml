@@ -60,46 +60,33 @@ services:
       timeout: 10s
       retries: 3
 
-  rabbitmq:
-    image: "rabbitmq:3-management"
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - app_network
-
   celery:
-    build: .
-    command: celery -A scanport worker -l info -Q local
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-      - redis
-      - rabbitmq
-    env_file:
-      - ./.env
-    environment:
-      - SERVICE_TYPE=celery
-      - ENVIRONMENT=staging
-      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
-    networks:
-      - app_network
+      build: .
+      command: celery -A scanport worker -l info -Q local
+      volumes:
+        - .:/app
+      depends_on:
+        - db
+        - redis
+      env_file:
+        - ./.env
+      networks:
+        - app_network
+      environment:
+        - SERVICE_TYPE=celery
+        - ENVIRONMENT=local
 
   celery-beat:
-    build: .
-    command: celery -A scanport beat -l info
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-      - redis
-      - rabbitmq
-    env_file:
-      - ./.env
-    environment:
-      - SERVICE_TYPE=celery-beat
-      - ENVIRONMENT=local
-      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
-    networks:
-      - app_network
+      build: .
+      command: sh -c "celery -A scanport beat -l info"
+      volumes:
+        - .:/app
+      depends_on:
+        - db
+        - redis
+      env_file:
+        - ./.env
+      networks:
+        - app_network
+      environment:
+        - SERVICE_TYPE=celery-beat

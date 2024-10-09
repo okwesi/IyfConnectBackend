@@ -26,8 +26,3 @@ STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 # Media files
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 CORS_ALLOW_ALL_ORIGINS = True
-
-
-CELERY_BROKER_URL = "sqs://{aws_access_key}:{aws_secret_key}@".format(
-    aws_access_key=aws_access_key, aws_secret_key=aws_secret_key,
-)

@@ -117,7 +117,7 @@ class User(AbstractUser, BaseModel, PermissionsMixin):
         ]
 
     def set_email_verification(self):
-        self.verification_code = random.randint(10000, 99999)
+        self.verification_code = random.randint(100000, 999999)
         self.save()
         return self.verification_code
 
