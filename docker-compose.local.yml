@@ -61,32 +61,32 @@ services:
       retries: 3
 
   celery:
-      build: .
-      command: celery -A scanport worker -l info -Q local
-      volumes:
-        - .:/app
-      depends_on:
-        - db
-        - redis
-      env_file:
-        - ./.env
-      networks:
-        - app_network
-      environment:
-        - SERVICE_TYPE=celery
-        - ENVIRONMENT=local
+    build: .
+    command: celery -A iyfconnect worker -l info -Q local
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - ./.env
+    networks:
+      - app_network
+    environment:
+      - SERVICE_TYPE=celery
+      - ENVIRONMENT=local
 
   celery-beat:
-      build: .
-      command: sh -c "celery -A scanport beat -l info"
-      volumes:
-        - .:/app
-      depends_on:
-        - db
-        - redis
-      env_file:
-        - ./.env
-      networks:
-        - app_network
-      environment:
-        - SERVICE_TYPE=celery-beat
+    build: .
+    command: sh -c "celery -A iyfconnect beat -l info"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - ./.env
+    networks:
+      - app_network
+    environment:
+      - SERVICE_TYPE=celery-beat

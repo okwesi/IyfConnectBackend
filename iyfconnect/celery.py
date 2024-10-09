@@ -5,9 +5,9 @@ from celery import Celery
 from iyfconnect.logging import logger
 
 # Set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', f"scanport.settings.{os.environ.get('ENVIRONMENT','local')}")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', f"iyfconnect.settings.{os.environ.get('ENVIRONMENT','local')}")
 
-app = Celery('scanport')
+app = Celery('iyfconnect')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
